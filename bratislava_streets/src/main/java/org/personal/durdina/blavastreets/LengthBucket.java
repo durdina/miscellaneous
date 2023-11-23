@@ -13,7 +13,7 @@ public record LengthBucket(int length, List<StringPair> strings) {
     // lengthBuckets.get(j).normalizedStrings().get(js)
     // -> List<Pair> getNormalizedStrings(j, js);
 
+    public record StringPair(String normalized, String original) {
+    }
 }
 
-record StringPair(String normalized, String original) {
-}

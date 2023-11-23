@@ -29,19 +29,20 @@ public class StringCollection {
             String str = br.readLine();
             int strLen = str.length();
             LengthBucket lengthBucket = lengthBuckets.get(strLen);
-            lengthBucket.strings().add(new StringPair(noAccentsLowercase(str), str));
+            lengthBucket.strings().add(new LengthBucket.StringPair(normalizeString(str), str));
         }
     }
 
     public List<SimilarityPair<String, String>> findStringsWithinDistance(int distance) {
         var result = new ArrayList<SimilarityPair<String, String>>();
-        // start with the longest bucket
+        // start with the shortest bucket (it does not really matter though)
         for (int i = 0; i < lengthBuckets.size(); i++) {
             // take all strings from the bucket
-            for (StringPair testedStrA : lengthBuckets.get(i).strings()) {
+            for (LengthBucket.StringPair testedStrA : lengthBuckets.get(i).strings()) {
                 var csc = new FuzzyStringCompare(testedStrA.normalized(), distance);
+                // compare each string with strings of similar lengths within given distance
                 for (int j = i + 1; j < lengthBuckets.size() && j < i + distance + 1; j++) {
-                    for (StringPair testedStrB : lengthBuckets.get(j).strings()) {
+                    for (LengthBucket.StringPair testedStrB : lengthBuckets.get(j).strings()) {
                         if (csc.isEqual(testedStrB.normalized())) {
                             result.add(new SimilarityPair<>(testedStrA.original(), testedStrB.original()));
                         }
@@ -53,12 +54,14 @@ public class StringCollection {
         return result;
     }
 
-    private static String noAccentsLowercase(String input) {
+    private static String normalizeString(String input) {
         return Normalizer.normalize(input.trim(), Normalizer.Form.NFKD)
                 .replaceAll("\\p{M}", "")
                 .toLowerCase();
     }
 
+
     public record SimilarityPair<T1, T2>(T1 s1, T2 s2) {
     }
+
 }

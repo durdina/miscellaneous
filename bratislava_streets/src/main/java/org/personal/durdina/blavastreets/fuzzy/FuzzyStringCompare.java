@@ -1,7 +1,5 @@
 package org.personal.durdina.blavastreets.fuzzy;
 
-import java.text.Normalizer;
-
 public class FuzzyStringCompare {
 
     private final String a;
@@ -16,7 +14,7 @@ public class FuzzyStringCompare {
         int aix = 0;
         int bix = 0;
         int possibleMismatches = this.possibleMismatches;
-        while (bix < b.length() && aix < a.length()) {
+        while (aix < a.length() && bix < b.length()) {
             if (a.charAt(aix) == b.charAt(bix)) {
                 aix++;
                 bix++;
@@ -35,7 +33,7 @@ public class FuzzyStringCompare {
                 return false;
             }
         }
-        return bix == b.length() && aix == a.length();
+        return aix == a.length() && bix == b.length();
     }
 
 }
