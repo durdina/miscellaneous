@@ -48,8 +48,7 @@ public class StringCollection {
             // take all strings from the bucket
             for (StringPair testedStrA : lengthBuckets.get(i).strings()) {
                 var csc = new FuzzyStringCompare(testedStrA.normalized(), distance);
-                for (int j = i + 1; j < lengthBuckets.size(); j++) {
-//                for (int j = i + 1; j < lengthBuckets.size() && j < i + distance + 1; j++) {
+                for (int j = i + 1; j < lengthBuckets.size() && j < i + distance + 1; j++) {
                     for (StringPair testedStrB : lengthBuckets.get(j).strings()) {
                         if (csc.isEqual(testedStrB.normalized())) {
                             result.add(new SimilarityPair<>(testedStrA.original(), testedStrB.original()));
