@@ -33,14 +33,6 @@ public class StringCollection {
         }
     }
 
-    public void printStrings() {
-        for (LengthBucket lb : lengthBuckets) {
-            for (StringPair s : lb.strings()) {
-                System.out.printf("%s\n", s.original());
-            }
-        }
-    }
-
     public List<SimilarityPair<String, String>> findStringsWithinDistance(int distance) {
         var result = new ArrayList<SimilarityPair<String, String>>();
         // start with the longest bucket
@@ -67,4 +59,6 @@ public class StringCollection {
                 .toLowerCase();
     }
 
+    public record SimilarityPair<T1, T2>(T1 s1, T2 s2) {
+    }
 }

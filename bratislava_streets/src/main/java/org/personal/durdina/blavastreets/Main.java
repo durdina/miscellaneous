@@ -9,14 +9,14 @@ public class Main {
             System.out.print("Usage: java org.example.Main <inputfile>\n");
             System.out.print("\tinputfile\t file that contains strings delimited by new line\n");
         }
-        StringCollection strDistance = new StringCollection();
+        StringCollection strCollection = new StringCollection();
         try (FileReader fileReader = new FileReader(args[0])) {
-            strDistance.loadStrings(fileReader);
+            strCollection.loadStrings(fileReader);
         }
 
-        var stringsWithinDistance = strDistance.findStringsWithinDistance(1);
-        for (SimilarityPair<String, String> stringSimilarityPair : stringsWithinDistance) {
-            System.out.printf("%s - %s\n", stringSimilarityPair.m1(), stringSimilarityPair.m2());
+        var stringsWithinDistance = strCollection.findStringsWithinDistance(1);
+        for (var similarityPair : stringsWithinDistance) {
+            System.out.printf("%s - %s\n", similarityPair.s1(), similarityPair.s2());
         }
         System.out.printf("In total %d similarities", stringsWithinDistance.size());
     }
